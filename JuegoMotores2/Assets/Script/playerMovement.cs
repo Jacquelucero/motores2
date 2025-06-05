@@ -4,19 +4,33 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Vector3 m_pos;
 
-    // Update is called once per frame
+    public float walkSpeed = 2f;
+    public float runSpeed = 4f;
+
     void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(horizontalInput * Time.deltaTime, 0, 0);
+        // Verificamos si está presionando Shift
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
+        // Movimiento
+        float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(0, verticalInput * Time.deltaTime, 0);
+
+        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0).normalized;
+
+        transform.Translate(movement * currentSpeed * Time.deltaTime);
+
+        // Rotación hacia el mouse
+        LookRotation();
+    }
+
+    void LookRotation()
+    {
+        m_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        m_pos.z = 0;
+        transform.up = (m_pos - transform.position);
     }
 }

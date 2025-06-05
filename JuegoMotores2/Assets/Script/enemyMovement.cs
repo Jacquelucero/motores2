@@ -2,59 +2,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class enemyMovement : MonoBehaviour
 {
-    private GameObject Player;
-    private bool isChasing = false;
-    private float chaseTimer = 0f;
+    public Transform pointA;
+    public Transform pointB;
+    private Transform currentTarget;
 
-    [Header("Configuración")]
-    public float chaseDuration = 4f;       
-    public float chaseRange = 4f;          
-    public float stopChaseRange = 8f;       
-    public float moveSpeed = 2f;            
+    public float patrolSpeed = 1.5f;
+    public float chaseSpeed = 3f;
+    public float stopChaseDistance = 8f;
+    public float waitBeforeChase = 1.5f;
+
+    private GameObject player;
+    private bool isChasing = false;
+    private bool isWaiting = false;
 
     void Start()
     {
-        Player = GameObject.FindWithTag("Player");
-        if (Player != null)
-        {
-            isChasing = true;
-        }
+        player = GameObject.FindWithTag("Player");
+        currentTarget = pointB;
     }
 
     void Update()
     {
-        if (Player == null) return;
+        if (player == null) return;
 
-        float distance = Vector3.Distance(Player.transform.position, transform.position);
-
-        if (distance < chaseRange)
+        if (!isChasing && !isWaiting)
         {
-            
-            isChasing = true;
-            chaseTimer = 0f; 
+            Patrol();
         }
 
         if (isChasing)
         {
-            if (distance < stopChaseRange)
-            {
-               
-                chaseTimer += Time.deltaTime;
-                Vector3 direction = (Player.transform.position - transform.position).normalized;
-                transform.Translate(direction * moveSpeed * Time.deltaTime);
+            float distance = Vector3.Distance(transform.position, player.transform.position);
 
-                if (chaseTimer >= chaseDuration)
-                {
-                    isChasing = false; 
-                }
+            if (distance > stopChaseDistance)
+            {
+                isChasing = false;
             }
             else
             {
-                
-                isChasing = false;
+                ChasePlayer();
             }
         }
+    }
+
+    void Patrol()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, patrolSpeed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, currentTarget.position) < 0.2f)
+        {
+            currentTarget = (currentTarget == pointA) ? pointB : pointA;
+        }
+    }
+
+    void ChasePlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && !isChasing && !isWaiting)
+        {
+            StartCoroutine(WaitThenChase());
+        }
+    }
+
+    IEnumerator WaitThenChase()
+    {
+        isWaiting = true;
+        yield return new WaitForSeconds(waitBeforeChase);
+        isWaiting = false;
+        isChasing = true;
     }
 }
