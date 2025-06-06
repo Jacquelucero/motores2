@@ -9,9 +9,9 @@ public class PlayerMovement1 : MonoBehaviour
     public float walkSpeed = 2f;
     public float runSpeedMultiplier = 4f;
 
-    public int maxLives = 3;
-    private int currentLives;
+     //[SerializeField] private int maxLives => currentLives;
 
+    public int currentLives = 3;
 
     float horizontalInput;
     float verticalInput;
@@ -23,7 +23,7 @@ public class PlayerMovement1 : MonoBehaviour
     void Start()
     {
        
-        currentLives = maxLives;
+        
         rb = GetComponent<Rigidbody2D>();
     }
     void Update()
