@@ -9,13 +9,21 @@ public class playerMovement : MonoBehaviour
     public float walkSpeed = 2f;
     public float runSpeed = 4f;
 
+    public int maxLives = 3;
+    private int currentLives;
+
+    void Start()
+    {
+        
+        currentLives = maxLives;
+    }
     void Update()
     {
-        // Verificamos si está presionando Shift
+       
         bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
-        // Movimiento
+     
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -23,7 +31,7 @@ public class playerMovement : MonoBehaviour
 
         transform.Translate(movement * currentSpeed * Time.deltaTime);
 
-        // Rotación hacia el mouse
+        
         LookRotation();
     }
 
@@ -32,5 +40,15 @@ public class playerMovement : MonoBehaviour
         m_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         m_pos.z = 0;
         transform.up = (m_pos - transform.position);
+    }
+    public void TakeDamage()
+    {
+        currentLives--;
+        Debug.Log("Vidas restantes: " + currentLives);
+
+        if (currentLives <= 0)
+        {
+            Debug.Log("Jugador muerto");
+        }
     }
 }

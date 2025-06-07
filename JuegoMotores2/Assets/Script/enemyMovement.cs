@@ -17,29 +17,41 @@ public class enemyMovement : MonoBehaviour
     private bool isChasing = false;
     private bool isWaiting = false;
 
+    private bool returningToPatrol = false;
+
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        currentTarget = pointB;
+        currentTarget = pointA;
     }
 
     void Update()
     {
         if (player == null) return;
 
-        if (!isChasing && !isWaiting)
+        if (isWaiting) return; 
+
+        if (returningToPatrol)
+        {
+            ReturnToPointA();
+            return;
+        }
+
+        if (!isChasing)
         {
             Patrol();
         }
-
-        if (isChasing)
+        else
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
 
             if (distance > stopChaseDistance)
             {
                 isChasing = false;
+
+                returningToPatrol = true; // Comienza a regresar al punto A
             }
+
             else
             {
                 ChasePlayer();
@@ -47,11 +59,12 @@ public class enemyMovement : MonoBehaviour
         }
     }
 
+
     void Patrol()
     {
-        transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, patrolSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, currentTarget.position, patrolSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, currentTarget.position) < 0.2f)
+        if (Vector2.Distance(transform.position, currentTarget.position) < 0.2f)
         {
             currentTarget = (currentTarget == pointA) ? pointB : pointA;
         }
@@ -59,14 +72,36 @@ public class enemyMovement : MonoBehaviour
 
     void ChasePlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !isChasing && !isWaiting)
+        if (other.CompareTag("Player"))
         {
-            StartCoroutine(WaitThenChase());
+            // Comienza la persecución si no está ya persiguiendo o esperando
+            if (!isChasing && !isWaiting)
+            {
+                StartCoroutine(WaitThenChase());
+            }
+
+            // Resta vidas al jugador si tiene el componente de salud
+            playerMovement health = other.GetComponent<playerMovement>();
+            if (health != null)
+            {
+                health.TakeDamage();
+            }
+        }
+    }
+
+    void ReturnToPointA()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, pointA.position, patrolSpeed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, pointA.position) < 0.2f)
+        {
+            returningToPatrol = false;
+            currentTarget = pointB; // retoma patrulla hacia B
         }
     }
 
@@ -77,4 +112,5 @@ public class enemyMovement : MonoBehaviour
         isWaiting = false;
         isChasing = true;
     }
+
 }
