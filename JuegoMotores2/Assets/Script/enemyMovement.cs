@@ -62,9 +62,9 @@ public class enemyMovement : MonoBehaviour
 
     void Patrol()
     {
-        transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, patrolSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, currentTarget.position, patrolSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, currentTarget.position) < 0.2f)
+        if (Vector2.Distance(transform.position, currentTarget.position) < 0.2f)
         {
             currentTarget = (currentTarget == pointA) ? pointB : pointA;
         }
@@ -72,7 +72,7 @@ public class enemyMovement : MonoBehaviour
 
     void ChasePlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, chaseSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
