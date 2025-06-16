@@ -42,7 +42,10 @@ public class playerAudioController : MonoBehaviour
             if (beingChased == false)
             {
 
+<<<<<<< HEAD
                 Debug.Log("colisione");
+=======
+>>>>>>> parent of 5d18317 (Revert "Merge Shanluki a Main")
                 AudioManager.Instance.StopMusic(previousRoom);
                 AudioManager.Instance.ChaseMusicLoop();
                 beingChased = true;
