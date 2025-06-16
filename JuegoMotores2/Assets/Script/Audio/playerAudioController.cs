@@ -42,7 +42,6 @@ public class playerAudioController : MonoBehaviour
             if (beingChased == false)
             {
 
-                Debug.Log("colisione");
                 AudioManager.Instance.StopMusic(previousRoom);
                 AudioManager.Instance.ChaseMusicLoop();
                 beingChased = true;
