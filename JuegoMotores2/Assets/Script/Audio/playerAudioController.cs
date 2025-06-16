@@ -12,7 +12,7 @@ public class playerAudioController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("SafeRoom"))
+        if (collision.gameObject.CompareTag("SafeRoom") && previousRoom != 1)
         {
             
             AudioManager.Instance.StopMusic(previousRoom);
@@ -20,7 +20,7 @@ public class playerAudioController : MonoBehaviour
             previousRoom = 1;
 
         }
-        if (collision.gameObject.CompareTag("EnemyRoom"))
+        if (collision.gameObject.CompareTag("EnemyRoom") && previousRoom != 2)
         {
            
             AudioManager.Instance.StopMusic(previousRoom);
@@ -28,7 +28,7 @@ public class playerAudioController : MonoBehaviour
             previousRoom = 2;
 
         }
-        if (collision.gameObject.CompareTag("PuzzleRoom"))
+        if (collision.gameObject.CompareTag("PuzzleRoom") && previousRoom != 3)
         {
 
             AudioManager.Instance.StopMusic(previousRoom);
