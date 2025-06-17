@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -9,7 +10,10 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource[] musicLoops;
 
-    [SerializeField] private AudioSource chaseMusic;
+    int previousMusic;
+
+
+
     [SerializeField] private AudioSource spotedSFX;
 
     
@@ -29,42 +33,52 @@ public class AudioManager : MonoBehaviour
   
     public void PlayMusic(int value)
     {
-       
-            musicLoops[value].Play();
-            musicLoops[value].volume = 10;
-            
         
-       
+            musicLoops[value].Play();
+        musicLoops[value].volume = 10;
+
+
+
+
+
 
     }
 
     public void StopMusic(int value)
     {
-        
-            StartCoroutine(FadeOut(value));
-        
-    }
 
-   IEnumerator FadeOut(int value)
-    {
-        while (musicLoops[value].volume > 0)
-        {
-            musicLoops[value].volume -= 1f * Time.deltaTime;
-            yield return null;
-        }
         musicLoops[value].Pause();
 
+        
+        
+        
     }
+
+  
      
   public void ChaseMusicLoop()
     {
-        StartCoroutine(WaitFor());
+        spotedSFX.Play();
+        musicLoops[4].PlayDelayed(0.74f);
+
+        //StartCoroutine(WaitFor());
         
     }
- IEnumerator WaitFor()
-    {
-        spotedSFX.Play();
-        yield return new WaitForSeconds(0.74f);
-        chaseMusic.Play();
-    }
+    //IEnumerator WaitFor()
+    //{
+       
+    //    yield return new WaitForSeconds(0.74f);
+
+        
+        
+           
+    //        musicLoops[4].volume = 10;
+    //    if (previousMusic != 4)
+    //    {
+    //        musicLoops[4].Stop();
+    //    }
+        
+        
+    //}
+   
 }
