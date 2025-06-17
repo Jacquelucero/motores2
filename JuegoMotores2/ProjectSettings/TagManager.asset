@@ -3,29 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Enemy
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  - SafeRoom
-  - EnemyRoom
-  - PuzzleRoom
-  - Room
-  - Espejo
-
-=======
-  - Room
-  - Espejo
->>>>>>> Stashed changes
-=======
-  - Room
-  - Espejo
->>>>>>> Stashed changes
-=======
-  - Room
-  - Espejo
->>>>>>> Stashed changes
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -33,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - vision
-  - Enemy
-  - RoomBounds
+  - 
+  - 
+  - 
   - 
   - 
   - 
