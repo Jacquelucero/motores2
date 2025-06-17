@@ -6,50 +6,60 @@ using UnityEngine;
 public class playerAudioController : MonoBehaviour
 {
 
-    private int previousRoom = 0;
+    private int previousMusic = 0;
 
-    bool beingChased = false;
+   
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("SafeRoom"))
-        {
-            
-            AudioManager.Instance.StopMusic(previousRoom);
-            AudioManager.Instance.PlayMusic(1);
-            previousRoom = 1;
-
-        }
-        if (collision.gameObject.CompareTag("EnemyRoom"))
+        if (collision.gameObject.CompareTag("SafeRoom") && previousMusic != 1)
         {
            
-            AudioManager.Instance.StopMusic(previousRoom);
-            AudioManager.Instance.PlayMusic(2);
-            previousRoom = 2;
+            StopChaseMusic();
+            AudioManager.Instance.StopMusic(previousMusic);
+            AudioManager.Instance.PlayMusic(1);
+            
+            previousMusic = 1;
 
         }
-        if (collision.gameObject.CompareTag("PuzzleRoom"))
+        if (collision.gameObject.CompareTag("EnemyRoom") && previousMusic != 2)
         {
+            StopChaseMusic();
 
-            AudioManager.Instance.StopMusic(previousRoom);
-            AudioManager.Instance.PlayMusic(3);
-            previousRoom = 3;
+            AudioManager.Instance.StopMusic(previousMusic);
+            AudioManager.Instance.PlayMusic(2);
+            
+            previousMusic = 2;
 
         }
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("PuzzleRoom") && previousMusic != 3)
+        {
+            StopChaseMusic();
+            AudioManager.Instance.StopMusic(previousMusic);
+            AudioManager.Instance.PlayMusic(3);
+            
+            previousMusic = 3;
+
+        }
+        if (collision.gameObject.CompareTag("Enemy") && previousMusic != 4)
         {
             
-            if (beingChased == false)
-            {
+            
 
 
-                AudioManager.Instance.StopMusic(previousRoom);
-                AudioManager.Instance.ChaseMusicLoop();
-                beingChased = true;
-            }
+                AudioManager.Instance.StopMusic(previousMusic);
+            previousMusic = 4;
+            AudioManager.Instance.ChaseMusicLoop();
+            
+
+
+
         }
 
     }
 
-    
+   void StopChaseMusic()
+    {
+        AudioManager.Instance.musicLoops[4].Stop();
+    }
 }

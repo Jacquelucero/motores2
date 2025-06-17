@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
@@ -9,17 +10,17 @@ public class playerMovement : MonoBehaviour
 
     public float walkSpeed = 2f;
     public float runSpeed = 4f;
-    public int maxLives = 3;
-    private int currentLives;
+    private int maxLives = 3;
+    public int currentLives => maxLives;
     public TextMeshProUGUI VidasTexto;
-    public TextMeshProUGUI gameOverText;
+   
     private Rigidbody2D rb;
     public Transform respawnPoint;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentLives = maxLives;
+      
         UpdateLivesUI();
     }
     void Update()
@@ -32,7 +33,7 @@ public class playerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
+        Vector2 movement = new Vector2(horizontalInput, verticalInput);
 
         rb.velocity = movement * currentSpeed;
 
@@ -49,7 +50,7 @@ public class playerMovement : MonoBehaviour
     }
     public void TakeDamage()
     {
-        currentLives--;
+        maxLives--;
         UpdateLivesUI();
 
         Debug.Log("Vidas restantes: " + currentLives);
@@ -61,14 +62,9 @@ public class playerMovement : MonoBehaviour
             rb.velocity = Vector2.zero; // detener movimiento
         }
 
-        if (currentLives <= 0)
+        if (maxLives <= 0)
         {
-            Debug.Log("Jugador muerto");
-            if (gameOverText != null)
-            {
-                gameOverText.gameObject.SetActive(true);
-            }
-            enabled = false;
+          SceneController.Instance.ToGameOver();
         }
     }
 
@@ -76,7 +72,7 @@ public class playerMovement : MonoBehaviour
     {
         if (VidasTexto != null)
         {
-            VidasTexto.text = "Vidas: " + currentLives;
+            VidasTexto.text = maxLives.ToString();
         }
     }
 
