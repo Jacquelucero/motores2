@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class enemyMovement : MonoBehaviour
 {
     public Transform pointA;
@@ -23,13 +22,18 @@ public class enemyMovement : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         currentTarget = pointA;
+        if (pointA != null)
+        {
+            transform.position = pointA.position; // Inicia en el punto A
+        }
+
     }
 
     void Update()
     {
         if (player == null) return;
 
-        if (isWaiting) return; 
+        if (isWaiting) return;
 
         if (returningToPatrol)
         {
@@ -79,26 +83,29 @@ public class enemyMovement : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Comienza la persecución si no está ya persiguiendo o esperando
             if (!isChasing && !isWaiting)
             {
                 StartCoroutine(WaitThenChase());
             }
 
-            // Resta vidas al jugador si tiene el componente de salud
-            playerMovement health = other.GetComponent<playerMovement>();
-            if (health != null)
+            if (isChasing)
             {
-                health.TakeDamage();
+                playerMovement health = other.GetComponent<playerMovement>();
+                if (health != null)
+                {
+                    health.TakeDamage();
+                }
             }
         }
     }
 
+
+
     void ReturnToPointA()
     {
-        transform.position = Vector3.MoveTowards(transform.position, pointA.position, patrolSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, pointA.position, patrolSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, pointA.position) < 0.2f)
+        if (Vector2.Distance(transform.position, pointA.position) < 0.2f)
         {
             returningToPatrol = false;
             currentTarget = pointB; // retoma patrulla hacia B
@@ -107,10 +114,23 @@ public class enemyMovement : MonoBehaviour
 
     IEnumerator WaitThenChase()
     {
-        isWaiting = true;
-        yield return new WaitForSeconds(waitBeforeChase);
-        isWaiting = false;
-        isChasing = true;
+        
+
+            isWaiting = true;
+            yield return new WaitForSeconds(waitBeforeChase);
+        if (returningToPatrol == false)
+        {
+            isWaiting = false;
+            isChasing = true;
+        }
+        
     }
+    public void StopChasingAndReturn()
+    {
+        isChasing = false;
+        returningToPatrol = true;
+        isWaiting = false;
+    }
+
 
 }
