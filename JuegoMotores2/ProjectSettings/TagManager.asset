@@ -8,6 +8,9 @@ TagManager:
   - SafeRoom
   - EnemyRoom
   - PuzzleRoom
+  - Room
+  - Espejo
+
   layers:
   - Default
   - TransparentFX
@@ -15,9 +18,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - vision
+  - Enemy
+  - RoomBounds
   - 
   - 
   - 

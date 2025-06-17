@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class playerMovement : MonoBehaviour
 {
@@ -8,14 +9,18 @@ public class playerMovement : MonoBehaviour
 
     public float walkSpeed = 2f;
     public float runSpeed = 4f;
-
     public int maxLives = 3;
     private int currentLives;
+    public TextMeshProUGUI VidasTexto;
+    public TextMeshProUGUI gameOverText;
+    private Rigidbody2D rb;
+    public Transform respawnPoint;
 
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
         currentLives = maxLives;
+        UpdateLivesUI();
     }
     void Update()
     {
@@ -27,11 +32,12 @@ public class playerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0).normalized;
+        Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
 
-        transform.Translate(movement * currentSpeed * Time.deltaTime);
+        rb.velocity = movement * currentSpeed;
 
-        
+
+
         LookRotation();
     }
 
@@ -44,11 +50,34 @@ public class playerMovement : MonoBehaviour
     public void TakeDamage()
     {
         currentLives--;
+        UpdateLivesUI();
+
         Debug.Log("Vidas restantes: " + currentLives);
+
+        // Teletransportar al jugador al punto de reaparición
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+            rb.velocity = Vector2.zero; // detener movimiento
+        }
 
         if (currentLives <= 0)
         {
             Debug.Log("Jugador muerto");
+            if (gameOverText != null)
+            {
+                gameOverText.gameObject.SetActive(true);
+            }
+            enabled = false;
         }
     }
+
+    void UpdateLivesUI()
+    {
+        if (VidasTexto != null)
+        {
+            VidasTexto.text = "Vidas: " + currentLives;
+        }
+    }
+
 }

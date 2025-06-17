@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6186016896510374680}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PointB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8535687354913876235}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyPatrolPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3395243261851288335}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PointA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3685219924779173793}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LivingRoom_Enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
