@@ -103,9 +103,9 @@ public class enemyMovement : MonoBehaviour
 
     void ReturnToPointA()
     {
-        transform.position = Vector3.MoveTowards(transform.position, pointA.position, patrolSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, pointA.position, patrolSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, pointA.position) < 0.2f)
+        if (Vector2.Distance(transform.position, pointA.position) < 0.2f)
         {
             returningToPatrol = false;
             currentTarget = pointB; // retoma patrulla hacia B
@@ -114,10 +114,16 @@ public class enemyMovement : MonoBehaviour
 
     IEnumerator WaitThenChase()
     {
-        isWaiting = true;
-        yield return new WaitForSeconds(waitBeforeChase);
-        isWaiting = false;
-        isChasing = true;
+        
+
+            isWaiting = true;
+            yield return new WaitForSeconds(waitBeforeChase);
+        if (returningToPatrol == false)
+        {
+            isWaiting = false;
+            isChasing = true;
+        }
+        
     }
     public void StopChasingAndReturn()
     {
