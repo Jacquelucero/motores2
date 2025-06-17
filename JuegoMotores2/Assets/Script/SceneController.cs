@@ -69,6 +69,11 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(Scenes["Level"]);
     }
 
+    public void ToGameOver()
+    {
+        SceneManager.LoadScene(Scenes["GameOver"]);
+    }
+
 
     IEnumerator ToMenuScreen()
     {

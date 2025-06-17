@@ -47,7 +47,7 @@ public class enemyMovement : MonoBehaviour
         }
         else
         {
-            float distance = Vector3.Distance(transform.position, player.transform.position);
+            float distance = Vector2.Distance(transform.position, player.transform.position);
 
             if (distance > stopChaseDistance)
             {
@@ -88,14 +88,7 @@ public class enemyMovement : MonoBehaviour
                 StartCoroutine(WaitThenChase());
             }
 
-            if (isChasing)
-            {
-                playerMovement health = other.GetComponent<playerMovement>();
-                if (health != null)
-                {
-                    health.TakeDamage();
-                }
-            }
+           
         }
     }
 

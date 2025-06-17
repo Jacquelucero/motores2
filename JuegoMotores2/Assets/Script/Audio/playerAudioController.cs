@@ -8,7 +8,7 @@ public class playerAudioController : MonoBehaviour
 
     private int previousMusic = 0;
 
-    bool beingChased = false;
+   
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
