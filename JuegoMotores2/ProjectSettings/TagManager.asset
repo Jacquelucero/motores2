@@ -6,12 +6,17 @@ TagManager:
   tags:
   - Enemy
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - SafeRoom
   - EnemyRoom
   - PuzzleRoom
   - Room
   - Espejo
 
+=======
+  - Room
+  - Espejo
+>>>>>>> Stashed changes
 =======
   - Room
   - Espejo
