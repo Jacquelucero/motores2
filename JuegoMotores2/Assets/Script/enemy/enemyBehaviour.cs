@@ -7,11 +7,14 @@ public class enemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        
+        if (collision.gameObject.CompareTag("Player"))
         {
-            playerMovement health = collision.GetComponent<playerMovement>();
+            
+            playerMove2 health = collision.gameObject.GetComponent<playerMove2>();
             if (health != null)
             {
+                Debug.Log("daño");
                 health.TakeDamage();
             }
         }

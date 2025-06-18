@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 
-public class playerMovement : MonoBehaviour
+public class playerMove2 : MonoBehaviour
 {
     Vector3 m_pos;
 
@@ -13,41 +12,72 @@ public class playerMovement : MonoBehaviour
     private int maxLives = 3;
     public int currentLives => maxLives;
     public TextMeshProUGUI VidasTexto;
-   
+
     private Rigidbody2D rb;
     public Transform respawnPoint;
+
+    private Animator animator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-      
+
         UpdateLivesUI();
+
+        animator = GetComponent<Animator>();
     }
     void Update()
     {
-       
+
+        Move();
+
+
+
+
+
+
+
+    }
+
+    void Move()
+    {        
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        Vector2 movement = new Vector2(horizontalInput, verticalInput);
+
+        
+
+
         bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
-     
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        
 
-        Vector2 movement = new Vector2(horizontalInput, verticalInput);
+        
 
         rb.velocity = movement * currentSpeed;
 
+        animator.SetFloat("inputX", horizontalInput);
+        animator.SetFloat("inputY", verticalInput);
+        
+        
+        if (horizontalInput == 0 && verticalInput == 0)
+        {
+            animator.SetBool("isWalking", false);
+            
+        }
+        else
+        {
+            animator.SetBool("isWalking", true);
+            animator.SetFloat("lastInputX", horizontalInput);
+            animator.SetFloat("lastInputY", verticalInput);
+        }
 
 
-        LookRotation();
     }
 
-    void LookRotation()
-    {
-        m_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        m_pos.z = 0;
-        transform.up = (m_pos - transform.position);
-    }
+    
+      
     public void TakeDamage()
     {
         maxLives--;
@@ -64,7 +94,7 @@ public class playerMovement : MonoBehaviour
 
         if (maxLives <= 0)
         {
-          SceneController.Instance.ToGameOver();
+            SceneController.Instance.ToGameOver();
         }
     }
 
@@ -75,5 +105,4 @@ public class playerMovement : MonoBehaviour
             VidasTexto.text = maxLives.ToString();
         }
     }
-
 }
