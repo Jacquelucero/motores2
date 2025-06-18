@@ -40,7 +40,7 @@ public class PuzzleEspejo : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = true;
         }
@@ -48,7 +48,7 @@ public class PuzzleEspejo : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = false;
             puzzleUI.SetActive(false);
