@@ -10,6 +10,10 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource[] musicLoops;
 
+    public AudioClip[] leverSFX;
+
+    public AudioSource leverSFXSource;
+
     int previousMusic;
 
 
@@ -80,5 +84,9 @@ public class AudioManager : MonoBehaviour
         
         
     //}
+   public void PlayLeverSFX(int state)
+    {
+        leverSFXSource.PlayOneShot(leverSFX[state]);
+    }
    
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Puzzle1 : MonoBehaviour
+public class PuzzleLeverSystem : MonoBehaviour
 {
 
 
@@ -36,10 +36,12 @@ public class Puzzle1 : MonoBehaviour
     }
 
 
-    void ResolvePuzzle()
+   public virtual void ResolvePuzzle()
     {
         puzzleResolved = true;
         Debug.Log("Resolviste el puzzle");
+
+        
     }
 
 }
