@@ -1,0 +1,89 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+
+public class SceneController : MonoBehaviour
+{
+    private static SceneController instance;
+    public static SceneController Instance => instance;
+
+
+    public Dictionary<string, int> Scenes = new Dictionary<string, int>();
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+
+
+        }
+        else { Destroy(gameObject); }
+       
+
+        //-------------
+
+
+        Scenes.Add("Splash", 0);
+
+        Scenes.Add("Menu", 1);
+
+        Scenes.Add("Loading", 2);
+
+        Scenes.Add("Level", 3);
+
+        Scenes.Add("GameOver", 4);
+
+        Scenes.Add("Victory", 5);
+    }
+
+    private void Start()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "SplashScreen")
+        {
+            StartCoroutine(ToMenuScreen());
+        }
+
+        if (scene.name == "LoadingScreen")
+        {
+            StartCoroutine(ToLevelScreen());
+        }
+    }
+
+
+    public void ToLoad()
+    {
+        SceneManager.LoadScene(Scenes["Loading"]);
+    }
+
+    public void ToMenu()
+    {
+        SceneManager.LoadScene(Scenes["Menu"]);
+    }
+
+    public void ToLevel()
+    {
+        SceneManager.LoadScene(Scenes["Level"]);
+    }
+
+    public void ToGameOver()
+    {
+        SceneManager.LoadScene(Scenes["GameOver"]);
+    }
+
+
+    IEnumerator ToMenuScreen()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(Scenes["Menu"]);
+    }
+    IEnumerator ToLevelScreen()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(Scenes["Level"]);
+    }
+}
+
