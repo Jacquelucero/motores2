@@ -1,9 +1,14 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CerrarPanelUI : MonoBehaviour
 {
-    public void CerrarPanel()
+    private void Update()
     {
-        gameObject.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+        }
+
     }
 }

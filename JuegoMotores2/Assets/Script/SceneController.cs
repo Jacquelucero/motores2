@@ -32,11 +32,15 @@ public class SceneController : MonoBehaviour
 
         Scenes.Add("Loading", 2);
 
-        Scenes.Add("Level", 3);
+        Scenes.Add("Level1", 3);
 
         Scenes.Add("GameOver", 4);
 
-        Scenes.Add("Victory", 5);
+        Scenes.Add("Level2", 5);
+
+        Scenes.Add("Victory", 6);
+
+
     }
 
     private void Start()
@@ -64,14 +68,24 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(Scenes["Menu"]);
     }
 
-    public void ToLevel()
+    public void ToLevel1()
     {
-        SceneManager.LoadScene(Scenes["Level"]);
+        SceneManager.LoadScene(Scenes["Level1"]);
     }
 
     public void ToGameOver()
     {
         SceneManager.LoadScene(Scenes["GameOver"]);
+    }
+
+    public void ToLevel2()
+    {
+        SceneManager.LoadScene(Scenes["Level2"]);
+    }
+
+    public void ToEndScene()
+    {
+        SceneManager.LoadScene(Scenes["Victory"]);
     }
 
 
@@ -83,7 +97,7 @@ public class SceneController : MonoBehaviour
     IEnumerator ToLevelScreen()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(Scenes["Level"]);
+        SceneManager.LoadScene(Scenes["Level1"]);
     }
 }
 

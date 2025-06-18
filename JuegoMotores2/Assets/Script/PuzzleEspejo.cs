@@ -26,7 +26,7 @@ public class PuzzleEspejo : MonoBehaviour
         string r2 = input2.text;
         string r3 = input3.text;
 
-        if (r1 == "3" && r2 == "5" && (r3 == "1" || r3 == "2"))
+        if (r1 == "3" && r2 == "7" && (r3 == "1" || r3 == "2"))
         {
             resultText.text = "¡Una llave aparece en la bañera de atrás!";
             keyObject.SetActive(true);
@@ -40,7 +40,7 @@ public class PuzzleEspejo : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = true;
         }
@@ -48,7 +48,7 @@ public class PuzzleEspejo : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = false;
             puzzleUI.SetActive(false);

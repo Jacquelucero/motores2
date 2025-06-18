@@ -14,13 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScenes/LoadingScreen.unity
     guid: 6652e4b7c1f79604e8c836be6cafc1ca
-  - enabled: 0
-    path: Assets/Scenes/Audio.unity
-    guid: c8f872fa1c3aae24eb68635ad9d4a981
   - enabled: 1
-    path: Assets/Scenes/Prototipo.unity
-    guid: dd5c18ab6ccdfc94d9bc561b63c98cc9
+    path: Assets/Scenes/GameScenes/Nivel 1.unity
+    guid: 944f7bd3a9a39c94b9e13cdd12b36ed5
   - enabled: 1
     path: Assets/Scenes/GameScenes/GameOverScene.unity
     guid: c8183e3e18d98da4a9e7b965a1a52fe6
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Nivel 2.unity
+    guid: 7ec9c4207477b874989f5f96005d607c
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/WinScreen.unity
+    guid: fd82b37de6b6e3148b615304e8355c05
   m_configObjects: {}

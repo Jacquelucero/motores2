@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class Puzzle1_LeverController : MonoBehaviour
 {
-    [SerializeField] private Puzzle1 Puzzle1;
+    [SerializeField] private PuzzleLeverSystem Puzzle1;
     [SerializeField] private int thisLeverNumber;
+
+    private SpriteRenderer spriteRenderer;
+
+    [SerializeField] private Sprite leverOnSprite;
+    [SerializeField] private Sprite leverOffSprite;
 
     
     private float timeElapsed;
    
     private bool canPress = false;
+
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -35,6 +45,8 @@ public class Puzzle1_LeverController : MonoBehaviour
         {
 
             Debug.Log("Activaste la palanca numero: " + thisLeverNumber);
+            AudioManager.Instance.PlayLeverSFX(1);
+            spriteRenderer.sprite = leverOnSprite;
             Puzzle1.leverState[thisLeverNumber] = true;
             timeElapsed = 0;
                              
@@ -44,6 +56,8 @@ public class Puzzle1_LeverController : MonoBehaviour
         {
 
            Debug.Log("Destivaste la palanca numero: " + thisLeverNumber);
+            AudioManager.Instance.PlayLeverSFX(0);
+            spriteRenderer.sprite = leverOffSprite;
             Puzzle1.leverState[thisLeverNumber] = false;
             timeElapsed = 0;
 
