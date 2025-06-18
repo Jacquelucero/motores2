@@ -61,6 +61,8 @@ public class enemyMovement : MonoBehaviour
                 ChasePlayer();
             }
         }
+
+        transform.rotation = Quaternion.identity;
     }
 
 
