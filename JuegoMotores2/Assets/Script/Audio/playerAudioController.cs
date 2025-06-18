@@ -8,8 +8,15 @@ public class playerAudioController : MonoBehaviour
 
     private int previousMusic = 0;
 
-   
-    
+   private AudioSource audioSource;
+    private Rigidbody2D rb;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("SafeRoom") && previousMusic != 1)
@@ -62,4 +69,15 @@ public class playerAudioController : MonoBehaviour
     {
         AudioManager.Instance.musicLoops[4].Stop();
     }
+
+    private void Update()
+    {
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            audioSource.volume = 10;
+        }
+        else { audioSource.volume -= 1 * Time.deltaTime; }
+    }
+
+    
 }
